@@ -1,0 +1,990 @@
+" 更新时间：2016-03-30 12:15:21
+
+" 定义快捷键的前缀，即 <Leader>
+let mapleader=";"
+
+" >>
+" 文件类型侦测
+
+" 开启文件类型侦测
+filetype on
+" 根据侦测到的不同类型加载对应的插件
+filetype plugin on
+
+" <<
+
+" >>
+" vim 自身（非插件）快捷键
+
+" 定义快捷键到行首和行尾
+nmap LB 0
+nmap LE $
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至vim
+nmap <Leader>p "+p
+
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <Leader>WQ :wa<CR>:q<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+
+" 设置快捷键遍历子窗口
+" 依次遍历
+"nnoremap nw <C-W><C-W>
+" 跳转至右方的窗口
+"nnoremap <Leader>lw <C-W>l
+" 跳转至方的窗口
+"nnoremap <Leader>hw <C-W>h
+" 跳转至上方的子窗口
+"nnoremap <Leader>kw <C-W>k
+" 跳转至下方的子窗口
+"nnoremap <Leader>jw <C-W>j
+
+" 定义快捷键在结对符之间跳转
+nmap <Leader>M %
+
+" <<
+
+" 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" >>
+" 其他
+
+" 开启实时搜索功能
+set incsearch
+
+" 搜索时大小写不敏感
+"set ignorecase
+
+" 关闭兼容模式
+set nocompatible
+
+" vim 自身命令行模式智能补全
+set wildmenu
+
+" <<
+
+" >>>>
+" 插件安装
+
+" vundle 环境设置
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-scripts/phd'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'kshenoy/vim-signature'
+Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/indexer.tar.gz'
+Plugin 'vim-scripts/DfrankUtil'
+Plugin 'vim-scripts/vimprj'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-scripts/DrawIt'
+Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'derekwyatt/vim-protodef'
+Plugin 'scrooloose/nerdtree'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'gcmt/wildfire.vim'
+Plugin 'sjl/gundo.vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'lilydjwg/fcitx.vim'
+Plugin 'fatih/vim-go'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'Raimondi/delimitMate'
+Plugin 'godlygeek/tabular'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-scripts/TaskList.vim'
+Plugin 'hdima/python-syntax'
+Plugin 'vim-scripts/vimwiki'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tomtom/tlib_vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'klen/python-mode'
+Plugin 'davidhalter/jedi'
+Plugin 'rking/ag.vim'
+
+" 插件列表结束
+call vundle#end()
+filetype plugin indent on
+" <<<<
+
+" 配色方案
+set background=dark
+colorscheme solarized
+"colorscheme molokai
+"colorscheme phd
+
+" >>
+" 营造专注气氛
+
+" 禁止光标闪烁
+set gcr=a:block-blinkon0
+
+" 禁止显示滚动条
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+" 禁止显示菜单和工具条
+set guioptions-=m
+set guioptions-=T
+
+" 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
+fun! ToggleFullscreen()
+	call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
+endf
+" 全屏开/关快捷键
+map <silent> <F11> :call ToggleFullscreen()<CR>
+"" 启动 vim 时自动全屏
+"autocmd VimEnter * call ToggleFullscreen()
+
+" <<
+
+" >>
+" 辅助信息
+
+" 总是显示状态栏
+set laststatus=2
+
+" 显示光标当前位置
+set ruler
+
+" 开启行号显示
+set number
+
+" 高亮显示当前行/列
+set cursorline
+set cursorcolumn
+
+" 高亮显示搜索结果
+set hlsearch
+
+" <<
+
+" >>
+" 其他美化
+
+" 设置 gvim 显示字体
+set guifont=YaHei\ Consolas\ Hybrid\ 10.5
+
+" 禁止折行
+set nowrap
+
+" 设置状态栏主题风格
+let g:Powerline_colorscheme='solarized256'
+
+" <<
+
+" >>
+" 语法分析
+
+" 开启语法高亮功能
+syntax enable
+" 允许用指定语法高亮配色方案替换默认方案
+syntax on
+
+" <<
+
+" >>
+" 缩进
+
+" 自适应不同语言的智能缩进
+"filetype indent on
+
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让 vim 把连续数量的空格视为一个制表符
+set softtabstop=4
+
+" 缩进可视化插件 Indent Guides
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+
+" <<
+
+" >>
+" 代码折叠
+
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+
+filetype on
+filetype plugin indent on
+"光标遇到折叠,折叠就打开
+set foldopen=all
+"光标离开就关闭
+set foldclose=all
+"显示中文引号
+set ambiwidth=double
+
+" <<
+
+" >>
+" 接口与实现快速切换
+
+" *.cpp 和 *.h 间切换
+nmap <silent> <Leader>sw :FSHere<cr>
+
+" <<
+
+" >>
+" 代码收藏
+
+" 自定义 vim-signature 快捷键
+let g:SignatureMap = {
+        \ 'Leader'             :  "m",
+        \ 'PlaceNextMark'      :  "m,",
+        \ 'ToggleMarkAtLine'   :  "m.",
+        \ 'PurgeMarksAtLine'   :  "m-",
+        \ 'DeleteMark'         :  "dm",
+        \ 'PurgeMarks'         :  "mda",
+        \ 'PurgeMarkers'       :  "m<BS>",
+        \ 'GotoNextLineAlpha'  :  "']",
+        \ 'GotoPrevLineAlpha'  :  "'[",
+        \ 'GotoNextSpotAlpha'  :  "`]",
+        \ 'GotoPrevSpotAlpha'  :  "`[",
+        \ 'GotoNextLineByPos'  :  "]'",
+        \ 'GotoPrevLineByPos'  :  "['",
+        \ 'GotoNextSpotByPos'  :  "mn",
+        \ 'GotoPrevSpotByPos'  :  "mp",
+        \ 'GotoNextMarker'     :  "[+",
+        \ 'GotoPrevMarker'     :  "[-",
+        \ 'GotoNextMarkerAny'  :  "]=",
+        \ 'GotoPrevMarkerAny'  :  "[=",
+        \ 'ListLocalMarks'     :  "ms",
+        \ 'ListLocalMarkers'   :  "m?"
+        \ }
+
+" <<
+
+" >>
+" 标签列表
+
+" 设置 tagbar 子窗口的位置出现在主编辑区的左边
+"let tagbar_left=1
+" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
+"nnoremap <F9> :TagbarToggle<CR>
+"nnoremap <Leader>ilt :TagbarToggle<CR>
+" 设置标签子窗口的宽度
+let tagbar_width=32
+" tagbar 子窗口中不显示冗余帮助信息
+let g:tagbar_compact=1
+" 设置 ctags 对哪些代码标识符生成标签
+let g:tagbar_type_cpp = {
+     \ 'ctagstype' : 'c++',
+     \ 'kinds'     : [
+         \ 'c:classes:0:1',
+         \ 'd:macros:0:1',
+         \ 'e:enumerators:0:0', 
+         \ 'f:functions:0:1',
+         \ 'g:enumeration:0:1',
+         \ 'l:local:0:1',
+         \ 'm:members:0:1',
+         \ 'n:namespaces:0:1',
+         \ 'p:functions_prototypes:0:1',
+         \ 's:structs:0:1',
+         \ 't:typedefs:0:1',
+         \ 'u:unions:0:1',
+         \ 'v:global:0:1',
+         \ 'x:external:0:1'
+     \ ],
+     \ 'sro'        : '::',
+     \ 'kind2scope' : {
+         \ 'g' : 'enum',
+         \ 'n' : 'namespace',
+         \ 'c' : 'class',
+         \ 's' : 'struct',
+         \ 'u' : 'union'
+     \ },
+     \ 'scope2kind' : {
+         \ 'enum'      : 'g',
+         \ 'namespace' : 'n',
+         \ 'class'     : 'c',
+         \ 'struct'    : 's',
+         \ 'union'     : 'u'
+     \ }
+\ }
+
+" <<
+
+" >>
+" 代码导航
+ 
+" 基于标签的代码导航
+
+" 设置插件 indexer 调用 ctags 的参数
+" 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v
+" 默认 --fields=+iaS 不满足 YCM 要求，需改为 --fields=+iaSl
+let g:indexer_ctagsCommandLineOptions="--c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v --fields=+iaSl --extra=+q"
+
+" 正向遍历同名标签
+nmap <Leader>tn :tnext<CR>
+" 反向遍历同名标签
+nmap <Leader>tp :tprevious<CR>
+
+" 基于语义的代码导航
+
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+
+" <<
+
+" >>
+" 查找
+
+" 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
+nnoremap <Leader>sp :CtrlSF<CR>
+
+" <<
+
+" >>
+" 内容替换
+
+" 快捷替换
+let g:multi_cursor_next_key='<S-n>'
+let g:multi_cursor_skip_key='<S-k>'
+
+" 精准替换
+" 替换函数。参数说明：
+" confirm：是否替换前逐一确认
+" wholeword：是否整词匹配
+" replace：被替换字符串
+function! Replace(confirm, wholeword, replace)
+    wa
+    let flag = ''
+    if a:confirm
+        let flag .= 'gec'
+    else
+        let flag .= 'ge'
+    endif
+    let search = ''
+    if a:wholeword
+        let search .= '\<' . escape(expand('<cword>'), '/\.*$^~[') . '\>'
+    else
+        let search .= expand('<cword>')
+    endif
+    let replace = escape(a:replace, '/\&~')
+    execute 'argdo %s/' . search . '/' . replace . '/' . flag . '| update'
+endfunction
+" 不确认、非整词
+nnoremap <Leader>R :call Replace(0, 0, input('Replace '.expand('<cword>').' with: '))<CR>
+" 不确认、整词
+nnoremap <Leader>rw :call Replace(0, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+" 确认、非整词
+nnoremap <Leader>rc :call Replace(1, 0, input('Replace '.expand('<cword>').' with: '))<CR>
+" 确认、整词
+nnoremap <Leader>rcw :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+nnoremap <Leader>rwc :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+
+" <<
+
+" 模板补全
+" UltiSnips 的 tab 键与 YCM 冲突，重新设定
+let g:UltiSnipsSnippetDirectories=["mysnippets"]
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+
+" >>
+" YCM 补全
+
+" YCM 补全菜单配色
+" 菜单
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=0
+"" 引入 C++ 标准库 tags
+"set tags+=/data/misc/software/app/vim/stdcpp.tags
+"set tags+=/data/misc/software/app/vim/sys.tags
+
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+
+" <<
+ 
+" >>
+" 由接口快速生成实现框架
+
+" 成员函数的实现顺序与声明顺序一致
+let g:disable_protodef_sorting=1
+
+" <<
+
+" >>
+" 库信息参考
+ 
+" 启用:Man命令查看各类man信息
+source $VIMRUNTIME/ftplugin/man.vim
+
+" 定义:Man命令查看各类man信息的快捷键
+nmap <Leader>man :Man 3 <cword><CR>
+
+" <<
+
+" >>
+" 工程文件浏览
+"NERD配置
+"autocmd vimenter * NERDTree
+autocmd StdinReadPre * let s:std_in=1
+auto VimEnter * if argc() == 0 && !exists("s:stdin") | NERDTree | endif
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+nmap <Leader>n :NERDTreeToggle<CR>
+" 设置 NERDTree 子窗口宽度
+let NERDTreeWinSize=22
+" 设置 NERDTree 子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible= '▾'
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+"ctrlp配置
+let g:ctrlp_map = ',,'
+"let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_open_multiple_files = 'v'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o
+let g:ctrlp_custom_ignore = {
+	\ 'dir' : '\v[\/]\.(git)$',
+	\ 'file' : '\v\.(so|o|gif|log|jpg|png|jpeg)$',
+	\ }
+
+" 相当于mru功能，show recently opened files
+" map <leader>fp :CtrlPMRU<CR>
+" let g:ctrlp_custom_ignore = {
+"     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+"         \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
+"             \ }
+"             "\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+"mru配置
+"tags
+set tags=tags
+set autochdir
+set exrc
+set secure
+"存储生成的tags到文件
+let g:vim_tags_auto_generate = 1
+"生成ctags
+let g:vim_tags_gems_tags_command = "{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+"异步调用系统命令
+let g:vim_tags_use_vim_dispatch = 0
+let g:vim_use_language_filed = 1
+let g:vim_tags_ignore_files = ['.gitignore' , '.svgignore' , '.cvsignore']
+"确定tags根目录
+let g:vim_tags_directories = [".git" , ".hg" , ".svn" , ".bzr" , "_darcs" , "CVS"]
+let g:vim_tags_main_file = 'tags'
+let g:vim_tags_extension = '.tags'
+let g:vim_tags_cache_dir = expand($HOME)
+" <<
+
+" >>
+" 多文档编辑
+ 
+" 显示/隐藏 MiniBufExplorer 窗口
+map <Leader>bl :MBEToggle<cr>
+
+" buffer 切换快捷键
+map <C-Tab> :MBEbn<cr>
+map <C-S-Tab> :MBEbp<cr>
+
+" <<
+
+
+" >>
+" 环境恢复
+
+" 设置环境保存项
+set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
+
+" 保存 undo 历史。必须先行创建 .undo_history/
+set undodir=~/.undo_history/
+set undofile
+
+" 保存快捷键
+"map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
+map <leader>ss :mksession! my.vim<cr>
+
+" 恢复快捷键
+"map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
+map <leader>rs :source my.vim<cr>
+
+" <<
+ 
+" 设置快捷键实现一键编译及运行
+nmap <Leader>m :wa<CR> :cd build/<CR> :!rm -rf main<CR> :!cmake CMakeLists.txt<CR>:make<CR><CR> :cw<CR> :cd ..<CR>
+nmap <Leader>g :wa<CR>:cd build/<CR>:!rm -rf main<CR>:!cmake CMakeLists.txt<CR>:make<CR><CR>:cw<CR>:cd ..<CR>:!build/main<CR>
+
+" >>
+" 快速选中结对符内的文本
+ 
+" 快捷键
+map <SPACE> <Plug>(wildfire-fuel)
+vmap <S-SPACE> <Plug>(wildfire-water)
+
+" 适用于哪些结对符
+let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
+
+" <<
+
+" 调用 gundo 树
+nnoremap <Leader>ud :GundoToggle<CR>
+
+
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+let g:go_fmt_command = "goimports"
+"let g:go_bin_path = expand("~/.gotools")
+
+"平台判断
+function! GetSystem()
+	if (has("win32") || has("win95") || has("win64") || has("win16"))
+		return "windows"
+	elseif has("unix")
+        let s:uname = system("uname -s")
+        if s:uname =~ "Darwin"
+            return "mac"
+        else
+    		return "linux"
+        endif
+	endif
+endfunction
+"获取光标处匹配
+function! GetPatternAtCursor(pat)
+	let col = col('.') - 1
+	let line = getline('.')
+	let ebeg = -1
+	let cont = match(line , a:pat , 0)
+	while (ebeg >= 0 || (0 <= cont) && (cont <= col))
+		let contn = matchend(line , a:pat , cont)
+		if (cont <= col) && (col < contn)
+			let ebeg = match(line , a:pat , cont)
+			let elen = contn - ebeg
+			break
+		else
+			let cont = match(line , a:pat , contn)
+		endif
+	endwh
+	if ebeg >= 9
+		return strpart(line , ebeg , elen)
+	else
+		return ""
+	endif
+endfunction
+"打开链接
+function! OpenUrl()
+	let s:url = GetPatternAtCursor('\v(https?://|ftp://|file:/{3}|www\.)((\w|-)+\.)+(\w|-)+(:\d+)?(/(\w|[~@#$%^&+=/.?-])+)?')	
+	"echo s:url
+	if s:url == ""
+		echo echohl WarningMsg
+		echomsg '在光标处未发现url'
+		echohl None
+	else
+		if GetSystem() == "windows"
+			call system("explorer" . s:url)
+		else
+			call system("firefox" . s:url . "&")
+		endif
+	endif
+endfunction
+nmap <C-LeftMouse> :call OpenUrl()<CR>
+"vim-path
+"execute pathogen#infect('stuff/{}')
+set expandtab
+if GetSystem() == "mac"
+    map ;; :TlistToggle<CR>
+elseif GetSystem() == "linux"
+    nnoremap <F4> :TlistToggle<CR>
+endif
+"echo system("tty")
+"window split 
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+"selected Ctrl+c
+vmap <C-c> "+y
+"syntastic 静态语法检查
+let g:syntastic_extra_filetypes = [ "make" , "gitcommit" ]
+let g:syntastic_php_checkers = [ "php" , "phpcs" , "phpmd" ]
+let g:syntastic_shell = "/bin/sh"
+set shell=/bin/sh
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_check_on_open = 1
+let g:syntastic_error_symbol = '✗'  "set error or warning signs
+let g:syntastic_enable_highlighting = 0
+"let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
+let g:syntastic_python_checkers=['pyflakes']
+"highlight SyntasticErrorSign guifg=white guibg=black
+
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+let g:syntastic_enable_balloons = 1 "whether to show balloons
+"设置emotaion
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_landing_highlight = 1
+
+"tabular代码对齐
+let g:tabular_loaded = 1
+"等号对齐
+nmap <leader>bb :Tab /=<CR>
+"自定义对齐
+nmap <leader>bn :Tab /
+
+"tags
+let Tlist_Show_One_File = 1 "show current file tag
+let Tlist_Exit_OnlyWindow = 1 "exit vim if tag is the last window 
+let Tlist_Use_Right_Window = 1 "right show the window
+let Tlist_File_Fold_Auto_Close = 1 "auto fold
+let Tlist_Auto_Open = 0
+let Tlist_Auto_Update = 1
+let Tlist_Hightlight_Tag_On_BufEnter = 1
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Process_File_Always = 1
+let Tlist_Display_Prototype = 0
+let Tlist_Compat_Format = 1
+"tags
+set tags=tags
+set autochdir
+set exrc
+set secure
+"存储生成的tags到文件
+let g:vim_tags_auto_generate = 1
+"生成ctags
+let g:vim_tags_gems_tags_command = "{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+"异步调用系统命令
+let g:vim_tags_use_vim_dispatch = 0
+let g:vim_use_language_filed = 1
+let g:vim_tags_ignore_files = ['.gitignore' , '.svgignore' , '.cvsignore']
+"确定tags根目录
+let g:vim_tags_directories = [".git" , ".hg" , ".svn" , ".bzr" , "_darcs" , "CVS"]
+let g:vim_tags_main_file = 'tags'
+let g:vim_tags_extension = '.tags'
+let g:vim_tags_cache_dir = expand($HOME)
+
+if &term == "tty"
+	set t_Co = 8
+	set t_Sb = ^[[4%dm
+	set t_Sf = ^[[333%dm
+endif
+"set cinoptions = {0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+
+"ag配置
+let g:ag_prg = "ag --vimgrep --smart-case"
+"将root=>r设置成ag搜索的工作目录
+let g:ag_working_path_mode = 'r'
+"设置搜索高亮
+let g:ag_highlight = 1
+"识别匹配的格式
+let g:ag_format = "%f:%l:%m"
+"设置窗口大小
+let g:ag_qhandler = "copen 20"
+
+"set cinoptions = {0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+
+
+"tagbar设置
+nnoremap <silent> <F9> :TagbarToggle<CR>
+"自动跳到tagbar当窗口打开时
+"f jump to Tagbar window when opening
+"j jump to Tagbar if already open
+"c close Tagbar on tag selection
+"TagbarOpen fj
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
+"remap the sort toggling functionality 
+let g:tagbar_map_togglesort = "r"
+let g:tagbar_ctags_bin = '/usr/bin/ctags'
+let g:tagbar_left = 1
+let g:tagbar_vertical = 30
+let g:tagbar_compact = 1
+let g:tagbar_width = 30
+"根据位置排序, 1则根据名称排序
+let g:tagbar_sort = 0
+"显示tagbar行号 0 no ; 1 abstract ; 2 relative ; -1 global
+let g:tagbar_show_linenumbers = 1
+"不显示非public的tagbar
+let g:tagbar_hide_nopublic = 1
+"自动扩展vim窗口
+let g:tagbar_expand = 1
+let g:tagbar_iconchars = ['▶', '▼']  
+let g:tagbar_autoshowtag = 1
+"function! TagbarStatusFunc(current, flags, ...) abort
+"	let colour = a:current ? '%#StatusLine#' : '%#StatusLineNC#'
+"    return colour . '[' . '] ' 
+"endfunction
+function! TagbarStatusFunc(current, sort, fname, flags, ...) abort
+	let colour = a:current ? '%#StatusLine#' : '%#StatusLineNC#'
+    let flagstr = join(a:flags, '')
+    if flagstr != ''
+        let flagstr = '[' . flagstr . '] '
+    endif
+    return colour . '[' . a:sort . '] ' . flagstr . a:fname
+endfunction
+let g:tagbar_status_func = 'TagbarStatusFunc'
+highlight TagbarScope guifg=Green ctermfg=Green
+"autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd FileType * nested :call tagbar#autoopen(0)
+"当打开多窗口时保留本窗口的tagbar
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
+"autocmd FileType c,cpp nested :TagbarOpen
+
+"设置minibuf
+" 多文件切换，也可使用鼠标双击相应文件名进行切换
+let g:miniBufExplMapWindowNavVim    = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs  = 1
+let g:miniBufExplModSelTarget       = 1
+"解决FileExplorer窗口变小问题
+let g:miniBufExplForceSyntaxEnable = 1
+let g:miniBufExplorerMoreThanOne=2
+let g:miniBufExplCycleArround=1
+" buffer 切换快捷键，默认方向键左右可以切换buffer
+map <C-Tab> :MBEbn<cr>
+map <C-S-Tab> :MBEbp<cr>
+
+"括号匹配高亮
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 40
+let g:rbpt_loadcmd_toggle = 0
+"whitepace标志无效空格
+map <leader><space> :FixWhitespace<cr>  " \+space去掉末尾空格
+let NERDSpaceDelims = 1
+"delimitMate引号自动补全
+au FileType python let b:delimitMate_nesting_quotes = ['"']
+"跳转到todo列表
+map <leader>td <Plug>TaskList
+
+"python语法高亮
+let python_highlight_all = 1
+"vimwiki配置
+let g:vimwiki_w32_dir_enc     = 'utf-8' " 设置编码"
+let g:vimwiki_use_mouse       = 1       " 使用鼠标映射"
+let g:vimwiki_valid_html_tags ='a,img,b,i,s,u,sub,sup,br,hr,div,del,code,red,center,left,right,h1,h2,h3,h4,h5,h6,pre,script,style'
+" 声明可以在wiki里面使用的HTML标签
+" 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
+let g:vimwiki_camel_case = 0
+let g:atCompany=0
+let blog = {}
+if  GetSystem() == "windows"
+    if g:atCompany
+        let blog.path          = 'D:/Files/Files/mysite/wiki/'
+        let blog.path_html     = 'D:/Files/Files/mysite/html/'
+        let blog.template_path = 'D:/Files/Files/mysite/templates/'
+        let blog.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+    else
+        let blog.path          = 'D:/Files/mysite/wiki/'
+        let blog.path_html     = 'D:/Files/mysite/html/'
+        let blog.template_path = 'D:/Files/mysite/templates/'
+        let blog.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+    endif
+else
+    let blog.path          = '~/mysite/wiki/'
+    let blog.path_html     = '~/mysite/html/'
+    let blog.template_path = '~/mysite/templates/'
+endif
+
+let blog.template_default  = 'site'
+let blog.template_ext      = '.html'
+let blog.auto_export       = 1
+let g:vimwiki_list = [blog]
+
+"vim markdown
+let g:vim_markdown_frontmatter=1
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
+
+
+"自定义命令模式
+map ;s :shell<CR>
+
+"map <Leader>g :call RopeGotoDefinition()<CR>
+let ropevim_enable_shortcuts = 1
+let g:pymode_rope_goto_def_newwin = "vnew"
+let g:pymode_rope_extended_complete = 1
+let g:pymode_breakpoint = 0
+let g:pymode_syntax = 1
+let g:pymode_syntax_builtin_objs = 0
+let g:pymode_syntax_builtin_funcs = 0
+"" map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+"" map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+
+" Better navigating through omnicomplete option list
+" See
+" http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
+set completeopt=longest,menuone
+function! OmniPopup(action)
+    if pumvisible()
+         if a:action == 'j'
+             return "\<C-N>"
+         elseif a:action == 'k'
+             return "\<C-P>"
+         endif
+     endif
+     return a:action
+endfunction
+
+inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
+inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
+
+"ag 配置
+"use * to search current word in normal mode
+nmap * <Plug>AgActionWord
+" use * to search selected text in visual mode
+vmap * <Plug>AgActionVisual
+
+"template
+
+let g:enable_template = 1
+"let g:template_dir = "~/.vim/template"
+let g:template_path = expand($HOME) .  "/.vim/template"
+let g:template_load=1 
+"设置标签替换
+let g:template_tags_replacing=1
+"let g:T_AUTHOR="whoami"
+let g:T_AUTHOR=system("whoami")
+let g:T_AUTHOR_EMAIL="yajin160305@gmail.com"
+let g:T_DATE_FORMAT="%Y-%m-%d %H:%M:%S"
+"c template
+autocmd BufNewFile *.c 0r ~/.vim/template/tlp.c
+"autocmd BufNewFile *.c 0r /home/arch/.vim/template/tlp.c
