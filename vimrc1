@@ -128,6 +128,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'klen/python-mode'
 Plugin 'davidhalter/jedi'
 Plugin 'rking/ag.vim'
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'xwsoul/vim-php'
 
 " 插件列表结束
 call vundle#end()
@@ -988,3 +990,15 @@ let g:T_DATE_FORMAT="%Y-%m-%d %H:%M:%S"
 "c template
 autocmd BufNewFile *.c 0r ~/.vim/template/tlp.c
 "autocmd BufNewFile *.c 0r /home/arch/.vim/template/tlp.c
+let g:phpcomplete_mappings = {
+  \ 'jump_to_def': ',g',
+  \ }
+"添加mongo扩展自动补全
+let g:phpcomplete_add_class_extensions = ['mongo']
+let g:phpcomplete_add_function_extensions = ['mongo']
+let g:phpcomplete_add_class_extensions=['mysql']
+let g:phpcomplete_add_function_extensions = ['mysql']
+
+"vim-php配置
+let g:phplint_command='/usr/bin/php'
+let g:phplint_highlight_color="DarkMagenta"
