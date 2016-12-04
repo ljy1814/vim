@@ -931,6 +931,7 @@ let g:vim_markdown_frontmatter=1
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:markdown_syntax_conceal = 0
+let g:instant_markdown_slow=1
 
 
 "自定义命令模式
@@ -1002,3 +1003,15 @@ let g:phpcomplete_add_function_extensions = ['mysql']
 "vim-php配置
 let g:phplint_command='/usr/bin/php'
 let g:phplint_highlight_color="DarkMagenta"
+
+"c++ compiler
+autocmd FileType cpp map <F8> <Esc>:w<CR>:!compile %<CR>
+autocmd FileType cc map <F8> <Esc>:w<CR>:!compile %<CR>
+autocmd FileType c map <F8> <Esc>:w<CR>:!compile %<CR>
+
+"注释
+"注释<leader>cc
+"取消注释<leader>cu
+
+"php快捷键
+vmap pubsf<CR> public static function () {<CR>}
