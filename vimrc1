@@ -65,6 +65,7 @@ set incsearch
 
 " 关闭兼容模式
 set nocompatible
+set backspace=indent,eol,start
 
 " vim 自身命令行模式智能补全
 set wildmenu
@@ -132,6 +133,7 @@ Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'xwsoul/vim-php'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'yegappan/mru'
 
 " 插件列表结束
 call vundle#end()
