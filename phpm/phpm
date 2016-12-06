@@ -1,0 +1,9 @@
+#!/bin/bash
+#cd /Users/nucleuz/Sites/phpm/
+cd /home/slack/vim/phpm
+args=" "
+while (( "$#" )); do
+    args="$args $1"
+    shift
+done
+php reader.php $args
