@@ -1,7 +1,7 @@
 " 更新时间：2016-03-30 12:15:21
 
 " 定义快捷键的前缀，即 <Leader>
-let mapleader=";"
+let mapleader="\\"
 
 " >>
 " 文件类型侦测
@@ -134,6 +134,7 @@ Plugin 'xwsoul/vim-php'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'yegappan/mru'
+Plugin 'StanAngeloff/php.vim'
 
 
 " 插件列表结束
@@ -1210,5 +1211,14 @@ inoremap <buffer> [ []<LEFT>
 " " inoremap ( ( )<LEFT><LEFT> 
 "
 inoremap <buffer> " ""<LEFT>
-inoremap <buffer> ' ''<LEFT>))"]}
+"inoremap <buffer> ' ''<LEFT>))"]}
 ":vimgrep /pattern/gj ./**/*.php  :cw显示查询结果
+function! PhpSyntaxOverride()
+    hi! def link phpDocTags  phpDefine
+    hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+    autocmd!
+    autocmd FileType php call PhpSyntaxOverride()
+augroup END
