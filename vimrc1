@@ -1226,3 +1226,7 @@ augroup END
 inoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>i
 nnoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>
 vnoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>
+
+"pubsf
+inoremap  <buffer> pubsf<CR> public static function ()<CR>{<CR>}<C-O>O
+inoremap  <buffer> pubs<CR> public static  ()<CR>{<CR>}<C-O>O
