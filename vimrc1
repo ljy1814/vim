@@ -633,6 +633,7 @@ let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
 nnoremap <Leader>ud :GundoToggle<CR>
 
 
+autocmd FileType go map <F8> <Esc>:w<CR>:!go run %<CR>
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
@@ -716,7 +717,7 @@ set expandtab
 if GetSystem() == "mac"
     map ;; :TlistToggle<CR>
 elseif GetSystem() == "linux"
-    nnoremap <F4> :TlistToggle<CR>
+    nnoremap <F7> :TlistToggle<CR>
 endif
 "echo system("tty")
 "window split 
