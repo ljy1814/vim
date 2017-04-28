@@ -14,7 +14,10 @@ ln -s "$WD/vimrc1" "$HOME/.vimrc"
 if [ -d "$VIMDIR" ] ; then
 	mv "$VIMDIR" "$VIMDIR.$TIME"
 fi
-mkdir "$VIMDIR"
+mkdir  "$VIMDIR"
+
+cp plugin template "$VIMDIR" -a 
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 cd
