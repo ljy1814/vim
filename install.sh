@@ -16,7 +16,7 @@ if [ -d "$VIMDIR" ] ; then
 fi
 mkdir  "$VIMDIR"
 
-cp plugin template "$VIMDIR" -a 
+cp -a plugin template "$VIMDIR"  
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
