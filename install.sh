@@ -25,3 +25,8 @@ cd
 vim +PluginInstall +qall
 
 # copy php-doc to plugin
+
+# ./configure --with-features=huge --enable-pythoninterp --enable-rubyinterp --enable-luainterp --enable-perlinterp --with-python-config-dir=/usr/lib/python2.7/config/ --enable-gui=gtk2 --enable-cscope --prefix=/usr
+
+# cd ~/.vim/bundle/YouCompleteMe
+# ./install.py --clang-completer --gocode-completer
