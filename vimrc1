@@ -35,6 +35,7 @@ nmap <Leader>w :w<CR>
 nmap <Leader>WQ :wa<CR>:q<CR>
 " 不做任何保存，直接退出 vim
 nmap <Leader>Q :qa!<CR>
+nmap <Leader>z :edit<CR>
 
 " 设置快捷键遍历子窗口
 " 依次遍历
@@ -137,6 +138,10 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'yegappan/mru'
 Plugin 'StanAngeloff/php.vim'
+" 打开import 文件
+Plugin 'javaimp.vim'
+" java自动补全
+Plugin 'javacomplete'
 
 
 " 插件列表结束
@@ -253,8 +258,8 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 " 代码折叠
 
 " 基于缩进或语法进行代码折叠
-"set foldmethod=indent
-set foldmethod=syntax
+set foldmethod=indent
+"set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
@@ -1267,3 +1272,14 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
+
+
+" javaimp
+let $JAVASOURCEPATH="$JAVA_HOME/src"
+map H :call OpenJavaImport($JAVASOURCEPATH)<CR>
+
+" javacomplete
+" Only do this part when compiled with support for autocommands.
+ autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+ autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
+ autocmd FileType java inoremap <buffer>. .<C-X><C-O><C-P>
