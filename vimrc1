@@ -138,10 +138,6 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'yegappan/mru'
 Plugin 'StanAngeloff/php.vim'
-" 打开import 文件
-Plugin 'javaimp.vim'
-" java自动补全
-Plugin 'javacomplete'
 
 
 " 插件列表结束
@@ -258,17 +254,17 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 " 代码折叠
 
 " 基于缩进或语法进行代码折叠
-set foldmethod=indent
-"set foldmethod=syntax
+"set foldmethod=indent
+set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
 filetype on
 filetype plugin indent on
 "光标遇到折叠,折叠就打开
-set foldopen=all
+"set foldopen=all
 "光标离开就关闭
-set foldclose=all
+"set foldclose=all
 "显示中文引号
 set ambiwidth=double
 
@@ -1134,79 +1130,6 @@ vnoremap <C-P> :call PhpDocRange()<CR>
 inoremap <buffer> <C-H> <ESC>:!/usr/share/vim/vimfiles/phpm/phpm <C-R>=expand("<cword>")<CR><CR>
 noremap <buffer> ; :s/\([^;]\)$/\1;/<cr>
 
-" Map <CTRL>-a to alignment function
-vnoremap <buffer> <C-a> :call PhpAlign()<CR>
-
-func! PhpAlign() range
-    let l:paste = &g:paste
-    let &g:paste = 0
-
-    let l:line        = a:firstline
-    let l:endline     = a:lastline
-    let l:maxlength = 0
-    while l:line <= l:endline
-                " Skip comment lines
-                if getline (l:line) =~ '^\s*\/\/.*$'
-                        let l:line = l:line + 1
-                        continue
-                endif
-                " \{-\} matches ungreed *
-        let l:index = substitute (getline (l:line),
-'^\s*\(.\{-\}\)\s*\S\{0,1}=\S\{0,1\}\s.*$', '\1', "")
-        let l:indexlength = strlen (l:index)
-        let l:maxlength = l:indexlength > l:maxlength ? l:indexlength :
-l:maxlength
-        let l:line = l:line + 1
-    endwhile
-
-        let l:line = a:firstline
-        let l:format = "%s%-" . l:maxlength . "s %s %s"
-
-        while l:line <= l:endline
-                if getline (l:line) =~ '^\s*\/\/.*$'
-                        let l:line = l:line + 1
-                        continue
-                endif
-        let l:linestart = substitute (getline (l:line), '^\(\s*\).*', '\1', "")
-        let l:linekey   = substitute (getline (l:line),
-'^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\1', "")
-        let l:linesep   = substitute (getline (l:line),
-'^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\2', "")
-        let l:linevalue = substitute (getline (l:line),
-'^\s*\(.\{-\}\)\s*\(\S\{0,1}=\S\{0,1\}\)\s\(.*\)$', '\3', "")
-
-        let l:newline = printf (l:format, l:linestart, l:linekey, l:linesep,
-l:linevalue)
-        call setline (l:line, l:newline)
-        let l:line = l:line + 1
-    endwhile
-    let &g:paste = l:paste
-endfunc
-
-vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
-
-func! PhpUnComment() range
-    let l:paste = &g:paste
-    let &g:paste = 0
-
-    let l:line        = a:firstline
-    let l:endline     = a:lastline
-
-        while l:line <= l:endline
-                if getline (l:line) =~ '^\s*\/\/.*$'
-                        let l:newline = substitute (getline (l:line),
-'^\(\s*\)\/\/ \(.*\).*$', '\1\2', '')
-                else
-                        let l:newline = substitute (getline (l:line),
-'^\(\s*\)\(.*\)$', '\1// \2', '')
-                endif
-                call setline (l:line, l:newline)
-                let l:line = l:line + 1
-        endwhile
-
-    let &g:paste = l:paste
-endfunc
-
 "自动对其
 "inoremap <buffer>  { {<CR>}<C-O>O
 
@@ -1222,22 +1145,6 @@ inoremap <buffer> ( ()<LEFT>
 inoremap <buffer> " ""<LEFT>
 "inoremap <buffer> ' ''<LEFT>))"]}
 ":vimgrep /pattern/gj ./**/*.php  :cw显示查询结果
-function! PhpSyntaxOverride()
-    hi! def link phpDocTags  phpDefine
-    hi! def link phpDocParam phpType
-endfunction
-
-augroup phpSyntaxOverride
-    autocmd!
-    autocmd FileType php call PhpSyntaxOverride()
-augroup END
-inoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>i
-nnoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>
-vnoremap <Leader>s <ESC>:call PhpSyntaxOverride()<CR>
-
-"pubsf
-inoremap  <buffer> pubsf<CR> public static function ()<CR>{<CR>}<C-O>O
-inoremap  <buffer> pubs<CR> public static  ()<CR>{<CR>}<C-O>O
 
 "设置indent
 set autoindent
@@ -1273,13 +1180,3 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-
-" javaimp
-let $JAVASOURCEPATH="$JAVA_HOME/src"
-map H :call OpenJavaImport($JAVASOURCEPATH)<CR>
-
-" javacomplete
-" Only do this part when compiled with support for autocommands.
- autocmd Filetype java setlocal omnifunc=javacomplete#Complete
- autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
- autocmd FileType java inoremap <buffer>. .<C-X><C-O><C-P>
