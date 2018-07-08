@@ -142,6 +142,7 @@ Plugin 'StanAngeloff/php.vim'
 Plugin 'javaimp.vim'
 " java自动补全
 Plugin 'javacomplete'
+Plugin 'posva/vim-vue'
 
 
 " 插件列表结束
