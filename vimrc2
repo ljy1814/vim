@@ -1,0 +1,521 @@
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'fatih/vim-go'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'rking/ag.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'majutsushi/tagbar'
+
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'honza/vim-snippets'                 "快速插入代码片段snippets
+Plugin 'scrooloose/nerdcommenter'           "快速加减注释
+Plugin 'scrooloose/syntastic'               "代码错误检测，其它应该也类似
+Plugin 'kien/ctrlp.vim'                     "文件搜索,杀手级,重新定义了编辑器打开文件的方式
+Plugin 'vim-scripts/TaskList.vim'           "快速跳转到TODO列表
+Plugin 'vim-scripts/SuperTab'               "Tab代码提示
+Plugin 'fannheyward/rainbow_parentheses.vim' "括号匹配高亮
+Plugin 'tpope/vim-surround'                 "快速加环绕符
+Plugin 'tpope/vim-repeat'                   "配合使用增强版命令重复
+"Plugin 'tpope/vim-sensible'                 "基本的Vim设置
+Plugin 'mhinz/vim-startify'                 "更改开始界面的插件
+Plugin 'bling/vim-airline'                  "状态栏
+Plugin 'junegunn/vim-easy-align'            "方便的按分隔符对齐,比如=号
+Plugin 'ConradIrwin/vim-bracketed-paste'    "插入模式下粘贴内容，不会有任何变形 :set paste
+"Plugin 'SirVer/ultisnips'                   "宏定义补全
+Plugin 'Yggdroot/indentLine'                "缩进虚线
+Plugin 'Shougo/unite.vim'                   "文件或Buffer列表
+Plugin 'Lokaltog/vim-easymotion'            "快速移动,杀手锏，跳转到光标后任意位置
+Plugin 'Raimondi/delimitMate'               "自动括号补全
+
+Plugin 'rhysd/vim-clang-format'
+
+Plugin 'wsdjeg/FlyGrep.vim'
+Plugin 'terryma/vim-multiple-cursors'
+
+" 插件列表结束
+call vundle#end()
+
+
+" 设置快捷键遍历子窗口
+" 依次遍历
+nnoremap nw <C-W><C-W>
+" 跳转至右方的窗口
+"nnoremap <Leader>lw <C-W>l
+nnoremap <C-l> <C-W>l
+" 跳转至方的窗口
+"nnoremap <Leader>hw <C-W>h
+nnoremap <C-h> <C-W>h
+" 跳转至上方的子窗口
+"nnoremap <Leader>kw <C-W>k
+nnoremap <C-k> <C-W>k
+" 跳转至下方的子窗口
+"nnoremap <Leader>jw <C-W>j
+nnoremap <C-j> <C-W>j
+
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至vim
+nmap <Leader>p "+p
+
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <Leader>WQ :wa<CR>:q<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+nmap <Leader>z :edit<CR>
+
+
+" 定义快捷键的前缀，即 <Leader>
+let mapleader="\\"
+
+" >>
+" 文件类型侦测
+
+" 开启文件类型侦测
+filetype on
+" 根据侦测到的不同类型加载对应的插件
+filetype plugin on
+
+set encoding=utf-8
+
+" 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+
+" 开启实时搜索功能
+set incsearch
+
+" 搜索时大小写不敏感
+"set ignorecase
+
+" 关闭兼容模式
+set nocompatible
+set backspace=indent,eol,start
+
+" vim 自身命令行模式智能补全
+set wildmenu
+
+
+
+" 总是显示状态栏
+set laststatus=2
+
+" 显示光标当前位置
+set ruler
+
+" 开启行号显示
+"set number
+set relativenumber
+
+" 高亮显示当前行/列
+set cursorline
+set cursorcolumn
+
+" 高亮显示搜索结果
+set hlsearch
+
+
+
+" 处理窗口
+nmap <Leader>n :NERDTreeToggle<CR>
+
+
+autocmd FileType go map <F8> <Esc>:w<CR>:!go run %<CR>
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+let g:go_fmt_command = "goimports"
+
+" 设置lint
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+"autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+
+let g:tagbar_ctags_bin = "~/code/gowork/bin/ctags"
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+
+
+function! GetSystem()
+	if (has("win32") || has("win95") || has("win64") || has("win16"))
+		return "windows"
+	elseif has("unix")
+        let s:uname = system("uname -s")
+        if s:uname =~ "Darwin"
+            return "mac"
+        else
+    		return "linux"
+        endif
+	endif
+endfunction
+
+
+"获取光标处匹配
+function! GetPatternAtCursor(pat)
+	let col = col('.') - 1
+	let line = getline('.')
+	let ebeg = -1
+	let cont = match(line , a:pat , 0)
+	while (ebeg >= 0 || (0 <= cont) && (cont <= col))
+		let contn = matchend(line , a:pat , cont)
+		if (cont <= col) && (col < contn)
+			let ebeg = match(line , a:pat , cont)
+			let elen = contn - ebeg
+			break
+		else
+			let cont = match(line , a:pat , contn)
+		endif
+	endwh
+	if ebeg >= 9
+		return strpart(line , ebeg , elen)
+	else
+		return ""
+	endif
+endfunction
+"打开链接
+function! OpenUrl()
+	let s:url = GetPatternAtCursor('\v(https?://|ftp://|file:/{3}|www\.)((\w|-)+\.)+(\w|-)+(:\d+)?(/(\w|[~@#$%^&+=/.?-])+)?')	
+	"echo s:url
+	if s:url == ""
+		echo echohl WarningMsg
+		echomsg '在光标处未发现url'
+		echohl None
+	else
+		if GetSystem() == "windows"
+			call system("explorer" . s:url)
+		else
+			call system("firefox" . s:url . "&")
+		endif
+	endif
+endfunction
+nmap <C-LeftMouse> :call OpenUrl()<CR>
+
+
+
+"自定义命令模式
+map ;s :shell<CR>
+
+let g:enable_template = 1
+"let g:template_dir = "~/.vim/template"
+let g:template_path = expand($HOME) .  "/.vim/template"
+let g:template_load=1 
+"设置标签替换
+let g:template_tags_replacing=1
+"let g:T_AUTHOR="whoami"
+"let g:T_AUTHOR=system("id | cut -d '(' -f 2 | cut -d ')' -f 1")
+let g:T_AUTHOR=system("whoami")
+let g:T_AUTHOR_EMAIL="yajin160305@gmail.com"
+let g:T_DATE_FORMAT="%Y-%m-%d %H:%M:%S"
+"c template
+"autocmd BufNewFile *.c 0r ~/.vim/template/tpl.c
+"autocmd BufNewFile *.c 0r /home/arch/.vim/template/tlp.c
+let g:phpcomplete_mappings = {
+  \ 'jump_to_def': ',g',
+  \ }
+
+
+"" 状态栏各个状态
+let statusHead         ="%-.50f\ %h%m%r"
+let statusBreakPoint   ="%<"
+let statusSeparator      ="|"
+let statusFileType      ="%{((&ft\ ==\ \"help\"\ \|\|\ &ft\ ==\ \"\")?\"\":\"[\".&ft.\"]\")}"
+let statusFileFormat    ="[%{(&ff\ ==\ \"unix\")?\"u\":\"d\"}]"
+let statusAscii         ="\{%b:0x%B\}"
+let statusCwd         ="%-.50{getcwd()}"
+let statusBody         =statusFileType.statusFileFormat.statusSeparator.statusAscii.statusSeparator."\ ".statusBreakPoint.statusCwd
+let statusEncoding      ="[%{(&fenc\ ==\ \"\"?&enc:&fenc).(&bomb?\",BOM\":\"\")}]"
+let statusBlank         ="%="
+let statusKeymap      ="%k"
+let statusRuler         ="%-12.(%lL,%c%VC%)\ %P"
+let statusTime         ="%{strftime(\"%y-%m-%d %H-%M-%S\",getftime(expand(\"%\")))}"
+let statusEnd=statusKeymap."\ ".statusEncoding.statusRuler."\ ".statusTime
+"" 最终状态栏的模式字符串
+let statusString=statusHead.statusBody.statusBlank.statusEnd
+set statusline=%!statusString
+
+
+set background=dark
+let g:Powerline_colorscheme='solarized256'
+
+
+"自动对其
+inoremap <buffer> { {<CR>}<C-O>O
+
+inoremap <buffer> [ []<LEFT>
+" Standard mapping after PEAR coding standard
+inoremap <buffer> ( ()<LEFT>
+"inoremap <buffer> ( ()<LEFT><LEFT>
+" " inoremap <buffer> ( ()<LEFT>
+"
+" " Maybe this way in other coding standards
+" " inoremap ( ( )<LEFT><LEFT> 
+"
+inoremap <buffer> " ""<LEFT>
+"inoremap <buffer> ' ''<LEFT>))"]}
+
+
+
+
+"ag配置
+let g:ag_prg = "ag --vimgrep --smart-case"
+"将root=>r设置成ag搜索的工作目录
+let g:ag_working_path_mode = 'r'
+"设置搜索高亮
+let g:ag_highlight = 1
+"识别匹配的格式
+let g:ag_format = "%f:%l:%m"
+"设置窗口大小
+let g:ag_qhandler = "copen 20"
+
+
+
+" YCM 补全
+
+" YCM 补全菜单配色
+" 菜单
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=0
+"" 引入 C++ 标准库 tags
+"set tags+=/data/misc/software/app/vim/stdcpp.tags
+"set tags+=/data/misc/software/app/vim/sys.tags
+
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+
+
+" 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
+nnoremap <Leader>sp :CtrlSF<CR>
+
+
+syntax on
+set autochdir
+
+
+" 自适应不同语言的智能缩进
+filetype indent on
+
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让 vim 把连续数量的空格视为一个制表符
+set softtabstop=4
+
+"设置字体
+set guifont=Courier:16
+
+" 设置NERDTree
+"autocmd vimenter * NERDTree
+autocmd StdinReadPre * let s:std_in=1
+"auto VimEnter * if argc() == 0 && !exists("s:stdin") | NERDTree | endif
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+nmap <Leader>n :NERDTreeToggle<CR>
+" 设置 NERDTree 子窗口宽度
+let NERDTreeWinSize=22
+" 设置 NERDTree 子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible= '▾'
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+
+" 转大写
+imap <c-u> <esc>lviwU<esc>i
+imap <a-u> <esc>lviwu<esc>i
+
+
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+" tagbar 
+nmap <leader>e :TagbarToggle<CR>
+
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11",
+            \ "BreakBeforeBraces" : "Stroustrup"}
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
