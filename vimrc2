@@ -40,6 +40,9 @@ Plugin 'rhysd/vim-clang-format'
 
 Plugin 'wsdjeg/FlyGrep.vim'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'hashrocket/vim-macdown'
+Plugin 'connorholyday/vim-snazzy'
+"Plugin 'vim-scripts/Conque-GDB'
 
 " 插件列表结束
 call vundle#end()
@@ -159,10 +162,24 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 " 设置lint
-set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+set rtp+=~/code/gowork/src/github.com/golang/lint/misc/vim
+"autocmd BufWritePost,FileWritePost *.go execute 'GoMetaLinter' | cwindow
 "autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 
-let g:tagbar_ctags_bin = "~/code/gowork/bin/ctags"
+set hidden
+map <leader>f :GoFmt<CR>
+map ;f :GoMetaLinter<CR>
+
+let g:go_fmt_command="goimports"
+let g:go_fmt_autosave=1
+"let g:go_fmt_autosave=0
+let g:syntastic_go_checkers=['gometalinter', 'govet', 'errcheck']
+let g:ale_linters = {'go': ['gometalinter']}
+"let g:syntastic_go_checkers=['golint', 'govet', 'errcheck']
+"let g:syntastic_go_checkers = ['gometalinter']
+let g:syntastic_mode_map={'mode':'active', 'passive_filetypes':['go']}
+
+let g:tagbar_ctags_bin = "/usr/bin/ctags"
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -247,6 +264,21 @@ function! OpenUrl()
 endfunction
 nmap <C-LeftMouse> :call OpenUrl()<CR>
 
+function! GetAuthor()
+    let s:T_AUTHOR = substitute(system("echo $AUTHOR"), '\n', '', 'g')
+    if s:T_AUTHOR == ""
+        let s:T_AUTHOR = substitute(system("whoami"), '\n', '', 'g')
+    endif
+    return s:T_AUTHOR
+endfunction
+
+function! GetEmail()
+    let s:T_AUTHOR = substitute(system("echo $EMAIL"), '\n', '', 'g')
+    if s:T_AUTHOR == ""
+        return "yajin160305@gmail.com"
+    endif
+    return s:T_AUTHOR
+endfunction
 
 
 "自定义命令模式
@@ -260,8 +292,11 @@ let g:template_load=1
 let g:template_tags_replacing=1
 "let g:T_AUTHOR="whoami"
 "let g:T_AUTHOR=system("id | cut -d '(' -f 2 | cut -d ')' -f 1")
-let g:T_AUTHOR=system("whoami")
-let g:T_AUTHOR_EMAIL="yajin160305@gmail.com"
+"let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
+"let g:T_AUTHOR = substitute(system("whoami"), '\n', '', 'g')
+let g:T_AUTHOR = GetAuthor()
+let g:T_AUTHOR_EMAIL=GetEmail()
+"let g:T_AUTHOR_EMAIL="yajin160305@gmail.com"
 let g:T_DATE_FORMAT="%Y-%m-%d %H:%M:%S"
 "c template
 "autocmd BufNewFile *.c 0r ~/.vim/template/tpl.c
@@ -519,3 +554,11 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+" set nofoldenable
+set maxmempattern=2000
+"map ba :1,$bd!
+autocmd ColorScheme lucius highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
+map ;t :terminal<CR>
+
+
